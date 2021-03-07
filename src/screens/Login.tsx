@@ -34,6 +34,7 @@ function Login({navigation}: Props) {
                 render={({onChange, value}) => (
                     <TextInput
                         label="Username"
+                        keyboardType='default'
                         returnKeyType="next"
                         value={value}
                         onChangeText={text => onChange(text)}
@@ -54,6 +55,7 @@ function Login({navigation}: Props) {
                 render={({onChange, value}) => (
                     <TextInput
                         label="Password"
+                        keyboardType='default'
                         returnKeyType="done"
                         value={value}
                         onChangeText={text => onChange(text)}

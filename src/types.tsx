@@ -19,5 +19,4 @@ export type LoginFormValues = {
 export type SignupFormValues = {
   username: string;
   password: string;
-  repassword: string;
 }

@@ -13,7 +13,7 @@ type Props = {
 }
 function Signup({navigation}: Props) {
     const {useLogin} = useOvermind().actions.app;
-    const {handleSubmit, control, errors} = useForm<SignupFormValues>();
+    const {handleSubmit, control, errors, reset} = useForm<SignupFormValues>();
 
     const onSubmit: SubmitHandler<SignupFormValues> = data => {
         console.log(data)
@@ -23,7 +23,7 @@ function Signup({navigation}: Props) {
         <Background>
             <Logo />
 
-            <Header>Welcome back.</Header>
+            <Header>Create Account</Header>
             <Controller
                 defaultValue=''
                 name='username'
@@ -34,6 +34,7 @@ function Signup({navigation}: Props) {
                 render={({onChange, value}) => (
                     <TextInput
                         label="Username"
+                        keyboardType='default'
                         returnKeyType="next"
                         value={value}
                         onChangeText={text => onChange(text)}
@@ -54,32 +55,12 @@ function Signup({navigation}: Props) {
                 render={({onChange, value}) => (
                     <TextInput
                         label="Password"
-                        returnKeyType="next"
+                        keyboardType='default'
+                        returnKeyType="done"
                         value={value}
                         onChangeText={text => onChange(text)}
                         error={errors.password ? true : false}
                         errorText={errors?.password?.message}
-                        secureTextEntry
-                    />
-
-                )}
-            />
-
-            <Controller
-                defaultValue=''
-                name='repassword'
-                control={control}
-                rules={{
-                    required: {value: true, message: 'Confirm password'}
-                }}
-                render={({onChange, value}) => (
-                    <TextInput
-                        label="RePassword"
-                        returnKeyType="done"
-                        value={value}
-                        onChangeText={text => onChange(text)}
-                        error={errors.repassword ? true : false}
-                        errorText={errors?.repassword?.message}
                         secureTextEntry
                     />
 
@@ -92,7 +73,10 @@ function Signup({navigation}: Props) {
 
             <View style={styles.row}>
                 <Text style={styles.label}>Already have an account?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity onPress={() => {
+                    reset({username: '', password: ''});
+                    navigation.navigate('Login')
+                }}>
                     <Text style={styles.link}>Login</Text>
                 </TouchableOpacity>
             </View>
@@ -101,14 +85,9 @@ function Signup({navigation}: Props) {
 }
 
 const styles = StyleSheet.create({
-    forgotPassword: {
-        width: '100%',
-        alignItems: 'flex-end',
-        marginBottom: 24,
-    },
     row: {
         flexDirection: 'row',
-        marginTop: 4,
+        marginTop: 2,
     },
     label: {
         color: theme.colors.secondary,
